@@ -5,7 +5,7 @@ const Header = ({course}) => {
 }
 const Part = ({obj}) => {
   return (
-    <p>{obj.part} {obj.exercises}</p>
+    <p>{obj.name} {obj.exercises}</p>
   )
 }
 
@@ -28,18 +28,17 @@ const Total = ({exercises}) => {
 
 const App = () => {
   const course = 'Half Stack application development'
-
   const part1 = {
-    part : 'Fundamentals of React',
-    exercises : 10
+    name: 'Fundamentals of React',
+    exercises: 10
   }
   const part2 = {
-    part : 'Using props to pass data',
-    exercises : 7
+    name: 'Using props to pass data',
+    exercises: 7
   }
   const part3 = {
-    part : 'State of a component',
-    exercises : 14
+    name: 'State of a component',
+    exercises: 14
   }
 
   return (
