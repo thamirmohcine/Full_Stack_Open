@@ -1,4 +1,12 @@
 import {useState} from "react";
+
+const StatisticLine = (props) => {
+
+  return (
+    <p>{props.text} {props.value}</p>
+  )
+}
+
 const Statistics = ({ good, neutral, bad }) => {
   const total = (good + neutral + bad) === 0 ? 0 :good + neutral + bad;
   const average_ = total === 0 ? 0 : (good - bad) / total
@@ -15,11 +23,11 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {average_}</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={total} />
+      <StatisticLine text="average"  value={average_} />
       <p>positive {positive_} %</p>
     </>
   )
