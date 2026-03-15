@@ -25,10 +25,13 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, HandleSubmit
   )
 }
 
-const Persons = ({ persons, filter }) => {
+const Persons = ({ persons, filter , handleDelete}) => {
+
+
   return (
     <div>
-      {persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase())).map((person) => <div key={person.id}>{person.name} {person.number}</div>)}
+      {persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
+      .map((person) => <div key={person.id}>{person.name} {person.number} <button onClick={() => handleDelete(person.id)}>delete</button></div>)}
     </div>
   )
 }
@@ -46,6 +49,12 @@ const App = () => {
       })
   }, [])
 
+  const handleDelete = (id) => {
+    personsService.deletePerson(id)
+      .then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+  };
   const HandleSubmit = (e) => {
     e.preventDefault();
     if (persons.some((person) => person.name === newName)) {
@@ -70,7 +79,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} HandleSubmit={HandleSubmit} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons persons={persons} filter={filter} handleDelete={handleDelete} />
     </div>
   )
 }
