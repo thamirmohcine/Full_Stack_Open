@@ -29,6 +29,11 @@
       "id": "4014",
       "name": "hola ",
       "number": "123456789"
+    },
+    {
+      "id": "b58c",
+      "name": "moha ",
+      "number": "952658562356"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

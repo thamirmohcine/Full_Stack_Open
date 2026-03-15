@@ -1,6 +1,5 @@
 import { useState , useEffect} from 'react'
-import axios from 'axios'
-
+import  personsService  from './services/persons'
 
 const Filter = ({ filter, setFilter }) => {
   return (
@@ -29,7 +28,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, HandleSubmit
 const Persons = ({ persons, filter }) => {
   return (
     <div>
-      {persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase())).map((person) => <div key={person.name}>{person.name} {person.number}</div>)}
+      {persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase())).map((person) => <div key={person.id}>{person.name} {person.number}</div>)}
     </div>
   )
 }
@@ -41,9 +40,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personsService.getAll()
+      .then(Initdata => {
+        setPersons(Initdata)
       })
   }, [])
 
@@ -55,9 +54,9 @@ const App = () => {
     }
 
     const person = {name : newName, number: newNumber}
-    axios.post('http://localhost:3001/persons', person)
+    personsService.create(person)
       .then(response => {
-        setPersons(persons.concat(response.data));
+        setPersons(persons.concat(response));
       })
     setNewNumber('');
     setNewName('');
