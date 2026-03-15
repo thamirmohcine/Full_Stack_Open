@@ -58,7 +58,16 @@ const App = () => {
   const HandleSubmit = (e) => {
     e.preventDefault();
     if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const person = { ...persons.find((p) => p.name === newName), number: newNumber };
+        console.log(person);
+        personsService.update(person.id, person)
+          .then(() => {
+            setPersons(persons.map((p) => (p.id === person.id ? person : p)));
+          });
+          setNewNumber('');
+          setNewName(''); 
+      }
       return;
     }
 
