@@ -24,7 +24,7 @@ const App = () => {
     <>
     <Filter filter={filter} setFilter={setFilter} />
     <Notification message={notification.message} type={notification.type}/>
-    <Countries countries={countries} filter={filter}/>
+    <Countries countries={countries} filter={filter} setFilter={setFilter}/>
     </>
   )
 }
