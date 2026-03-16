@@ -1,7 +1,7 @@
 const Countries = ({ countries, filter }) => {
 
     
-if (!filter) return <div>Type a country name...</div>
+    if (!filter) return null;
 
     const filtered = countries.filter((country) => 
         country.name.common.toLowerCase().includes(filter.toLowerCase())
@@ -16,13 +16,12 @@ if (!filter) return <div>Type a country name...</div>
         return (
             <div>
                 <h1>{country.name.common}</h1>
-                <p>capital {country.capital}</p>
-                <p>area {country.area}</p>
+                <p>capital {country.capital} <br /> area {country.area}</p>
                 <h3>languages:</h3>
                 <ul>
                     {Object.values(country.languages).map(lang => <li key={lang}>{lang}</li>)}
                 </ul>
-                <img src={country.flags.png} alt="flag" width="150" />
+                <img src={country.flags.png}  />
             </div>
         );
     }
