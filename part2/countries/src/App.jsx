@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import getAll from "./services/Countries";
+import CountriesService from "./services/Countries";
 import Notification from "./components/Notification";
 import Filter from "./components/Filter"
 import Countries from "./components/Countries";
+
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -10,7 +11,7 @@ const App = () => {
   const [notification, setNotification] = useState({message: null, type: null})
 
   useEffect(() => {
-    getAll()
+    CountriesService.getAll()
     .then(initCountries => setCountries(initCountries))
     .catch(error =>{
       setNotification({message: 'Error Getting Countries', type: 'error'})
@@ -20,6 +21,9 @@ const App = () => {
     }  
     )}, [])
 
+    // useEffect(() => {
+
+    // },[filter])
   return (
     <>
     <Filter filter={filter} setFilter={setFilter} />

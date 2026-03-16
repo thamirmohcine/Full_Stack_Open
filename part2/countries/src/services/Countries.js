@@ -7,4 +7,15 @@ const getAll = () => {
         .then(res => res.data)
 }
 
-export default getAll;
+const getWeather = (capital) => {
+    return axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${import.meta.env.VITE_WEATHER_KEY}&units=metric`)
+        .then(response => (response.data))
+}
+
+
+
+
+export default {
+    getAll,
+    getWeather
+};
