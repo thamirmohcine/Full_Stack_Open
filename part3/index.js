@@ -53,6 +53,11 @@ app.post('/api/persons', (request, response) => {
             error: "name or number Missing !"
         });
     }
+
+    nameExists = persons.find(p => p.name === request.body.name);
+    if (nameExists) {
+        return response.status(400).send({ error: "name must be unique" })
+    }
     const person = {
         id: Math.floor(Math.random() * 1000000).toString(),
         name: request.body.name,
