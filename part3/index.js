@@ -24,6 +24,9 @@ app.get('/api/persons', (request, response) => {
     response.send(persons);
 });
 
+app.get('/info', (request, response) => {
+    response.send(`Phonebook has info for ${persons.length} people <br> ${new Date()}`);
+})
 
 const PORT = 3001;
 app.listen(PORT);
