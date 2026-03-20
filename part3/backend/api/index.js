@@ -1,12 +1,11 @@
 const express = require('express');
 const morgan = require('morgan')
+const path = require('path')
 const cors = require('cors')
 const app = express()
 
 app.use(express.json());
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(cors())
-
 
 morgan.token('body', (req, res) => {
     if (req.method === 'POST') {
@@ -14,7 +13,8 @@ morgan.token('body', (req, res) => {
     }
 })
 
-
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+app.use(express.static(path.join(__dirname, '..', 'dist')))
 let persons = [{
     "id": "1",
     "name": "Arto Hellas",
@@ -38,15 +38,11 @@ app.get('/api/persons', (request, response) => {
     response.send(persons);
 });
 
-app.get('/info', (request, response) => {
-    response.send(`Phonebook has info for ${persons.length} people <br> ${new Date()}`);
-})
-
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id;
     const person = persons.find(p => p.id === id);
     if (person)
-        response.send(person);
+        return response.send(person);
     response.status(404).end();
 
 })
@@ -66,7 +62,7 @@ app.post('/api/persons', (request, response) => {
         });
     }
 
-    nameExists = persons.find(p => p.name === request.body.name);
+    const nameExists = persons.find(p => p.name === request.body.name);
     if (nameExists) {
         return response.status(400).send({ error: "name must be unique" })
     }
@@ -79,7 +75,16 @@ app.post('/api/persons', (request, response) => {
     response.status(201).json(person);
 })
 
+app.get(/^\/.*$/, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
+})
 
-const PORT = process.env.PORT || 3001
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`)
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = process.env.PORT || 3001
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`)
+    })
+}
+
+
+module.exports = app;
