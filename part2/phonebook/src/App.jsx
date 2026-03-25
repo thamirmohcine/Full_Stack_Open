@@ -67,6 +67,13 @@ const App = () => {
         setNewNumber('');
         setNewName('');
       })
+      // .catch(error => {
+      //   const errorMsg = error.response.data.error;
+      //   setNotification({message: errorMsg, type: 'error'})
+      //   setTimeout(() => {
+      //     setNotification({message: null, type: null})
+      //   }, 5000);
+      // })
   }
 
   
