@@ -1,12 +1,12 @@
+require('dotenv').config();
+// const { Query } = require('mongoose');
 const express = require('express');
 const morgan = require('morgan')
 const path = require('path')
 const cors = require('cors')
 const app = express()
-require('dotenv').config();
 
 const Person = require('../models/person');
-const { Query } = require('mongoose');
 
 app.use(express.json());
 app.use(cors())
@@ -65,7 +65,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndUpdate(request.params.id, person, {new: true, runValidators: true, context: 'query'})
     .then(UpdatedPerson => {
         if (UpdatedPerson){
-            response.json(person)
+            response.json(UpdatedPerson)
         }else {
             response.status(404).end()
         }
